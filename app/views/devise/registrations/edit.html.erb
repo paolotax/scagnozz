@@ -1,0 +1,50 @@
+<div class="mt-8 mx-auto max-w-xl">
+  <%= render "ui/controller_action" %>
+  <div class="border-2 p-16 text-center rounded-md">
+    <div class="max-w-md mx-auto">
+      <div class="">
+        <h1 class="font-display font-bold text-6xl">Edit your information</h1>
+      </div>
+      <%= render "devise/shared/error_messages", resource: @user %>
+      <%= form_for(
+            resource,
+            as: resource_name,
+            url: registration_path(resource_name),
+            html: { method: :put, class: "mt-16 text-left mx-auto space-y-4" },
+          ) do |f| %>
+        <div>
+          <%= f.label :email, class: "font-mono block text-sm font-medium leading-6 text-gray-900" %>
+          <div class="mt-2">
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "you@example.com", class: "block w-full py-1.5 text-stone-900 placeholder:text-stone-400 border-2 border-stone-200 rounded-md text-sm" %>
+          </div>
+        </div>
+        <div>
+          <%= f.label :password, "New Password", class: "font-mono block text-sm/8 font-medium text-gray-900" %>
+          <%= tag.em("[#{@minimum_password_length} characters minimum]", class: "text-xs font-mono") if @minimum_password_length %>
+          <div class="mt-2">
+            <%= f.password_field :password, autocomplete: "new-password", placeholder: "********", class: "block w-full py-1.5 text-stone-900 placeholder:text-stone-400 border-2 border-stone-200 rounded-md text-sm" %>
+          </div>
+        </div>
+        <div>
+          <%= f.label :password_confirmation, "Confirm New Password", class: "font-mono block text-sm/8 font-medium text-gray-900" %>
+          <div class="mt-2">
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "********", class: "block w-full py-1.5 text-stone-900 placeholder:text-stone-400 border-2 border-stone-200 rounded-md text-sm" %>
+          </div>
+        </div>
+        <div>
+          <%= f.label :current_password, class: "font-mono block text-sm/8 font-medium text-gray-900" %>
+          <div class="mt-2">
+            <%= f.password_field :current_password, autocomplete: "current-password", placeholder: "********", class: "block w-full py-1.5 text-stone-900 placeholder:text-stone-400 border-2 border-stone-200 rounded-md text-sm" %>
+          </div>
+        </div>
+        <div class="flex mx-auto">
+          <%= link_to "Back", :back, class: "mt-4 w-full rounded-l-md text-center py-2 border-2 border-stone-800 hover:bg-stone-800 hover:text-stone-50" %>
+          <%= f.submit "Update account →", class: "mt-4 w-full rounded-r-md py-2 text-stone-50 bg-stone-800 hover:cursor-pointer" %>
+        </div>
+      <% end %>
+      <div class="mt-12">
+        <%= button_to "Cancel my account", registration_path(resource_name), class: "font-mono text-sm hover:underline", data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
+      </div>
+    </div>
+  </div>
+</div>

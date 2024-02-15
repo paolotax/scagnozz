@@ -1,0 +1,14 @@
+web: RUBY_DEBUG_OPEN=true bin/rails server -p 3000
+css: bin/rails tailwindcss:watch
+
+# [RailsNotes UI Addition]
+# Run Sidekiq and Redis for background jobs.
+#
+redis: redis-server
+sidekiq: bundle exec sidekiq
+
+# Optional: run Stripe CLI or ngrok for payments webhooks.
+# Uncomment them below (or delete if not using).
+#
+#ngrok: ngrok http --domain=bold-labrador-integral.ngrok-free.app 3000
+#stripe: stripe listen --forward-to localhost:3000/pay/webhooks/stripe

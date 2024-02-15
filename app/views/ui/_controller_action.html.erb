@@ -1,0 +1,12 @@
+<!--
+	[RailsNotes UI Addition]
+	Displays the current controller action, to figure out what route you're looking at.
+	Makes your life a bit easier.
+
+	By default, does _not_ render in production.
+-->
+<% if Rails.env.local? %>
+  <p class="text-sm italic font-display text-stone-700 tracking-tight font-extralight">
+    <%= "#{controller_name}##{action_name}" %>
+  </p>
+<% end %>

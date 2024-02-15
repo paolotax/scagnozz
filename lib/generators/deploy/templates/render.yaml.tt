@@ -1,0 +1,53 @@
+# Add the configuration for the main Rails app, Postgres database, and Redis cluster here
+# More info:
+#   - https://docs.render.com/blueprint-spec
+#   - https://railsnotes.xyz/blog/deploying-ruby-on-rails-on-render-with-databse-redis-sidekiq-cron
+databases:
+  - name: <%= @db_name %>
+    databaseName: <%= @db_name %>
+    user: <%= @app_name %>
+
+services:
+  - type: redis
+    name: <%= @redis_name %>
+    ipAllowList: [] # only allow internal connections
+    plan: free # optional (defaults to starter)
+    maxmemoryPolicy: noeviction
+
+  - type: worker
+    name: sidekiq-worker
+    env: ruby
+    buildCommand: bundle install
+    startCommand: bundle exec sidekiq -C config/sidekiq.yml
+    envVars:
+      # give access to db
+      - key: DATABASE_URL
+        fromDatabase:
+          name: <%= @db_name %>
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: REDIS_URL # this must match the name of the environment variable used in production.rb
+        fromService:
+          type: redis
+          name: <%= @redis_name %>
+          property: connectionString
+
+  #  main app
+  - type: web
+    name: <%= @web_name %>
+    env: ruby
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: <%= @db_name %>
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: REDIS_URL # this must match the name of the environment variable used in production.rb
+        fromService:
+          type: redis
+          name: <%= @redis_name %>
+          property: connectionString

@@ -1,0 +1,16 @@
+# [RailsNotes UI Addition]
+# RSpec fixture for a test user; within our tests we log in as the user with —
+#
+# RSpec.describe "BasicSiteTests", type: :system do
+#   fixtures :users
+#   it "should render root url after user login" do
+#     sign_in users(:regular_user)
+#     ...
+#   end
+# end
+#
+regular_user:
+  email: regular.user@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, '123456') %>
+  name: R. Egular
+  image_url: http://example.com/avatar.jpg

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%#
+      [RailsNotes UI Addition]
+      Render the ui/head_meta_tags partial and pass in @meta_tags.
+      Unless you set @meta_tags in a view, it will be nil. In that case, the default values in the head_meta_tags
+      partial get used. Edit them in app/views/ui/_head_meta_tags.html.erb
+    %>
+    <%= render "ui/head_meta_tags", meta_tags: @meta_tags %>
+  </head>
+  <body class="h-full w-full py-12 bg-stone-50 text-stone-900 max-w-3xl mx-auto">
+    <%= yield %>
+  </body>
+</html>

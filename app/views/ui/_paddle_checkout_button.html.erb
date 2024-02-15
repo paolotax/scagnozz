@@ -1,0 +1,35 @@
+<% # locals: (text:, theme: :none, items:) %>
+<!-- (above is a magic comment for strict locals: https://guides.rubyonrails.org/action_view_overview.html#strict-locals)
+
+[RailsNotes UI Addition]
+ui/paddle_checkout_button renders a Paddle checkout button with the correct data-attributes set.
+
+text:    Text for the button
+theme:   One of [:light, :dark, :none]
+         :light and :dark apply some Paddle styling, :none lets you apply your own
+items:   An array of product item hashes, like —
+            items: [{priceId: 'string', quantity: integer}]
+         Where:
+         - priceId (string): The ID value of the Price associated to a Product. From Paddle Dashboard > Catalog > Products.
+         - quantity (integer): How many units of the price you'll charge.
+         - docs: https://developer.paddle.com/build/checkout/build-overlay-checkout#pass-your-items
+
+Example:
+render "ui/paddle_checkout_button",
+							text: "Paddle Checkout →",
+							theme: :none,
+							items: [{
+								priceId: "pri_01hm2n54bg0y1z990pkbt7szdg",
+								quantity: 1,
+							}]
+-->
+<a href='#'
+   class='paddle_button px-4 py-2 border-2 rounded-md hover:border-gray-800'
+   data-display-mode='overlay'
+   data-theme=<%= theme.to_s %>
+   data-locale='en'
+   data-items='<%= items.to_json %>'
+   data-customer-id='<%= current_user.payment_processor.processor_id %>'
+   >
+  <%= text %>
+</a>
