@@ -1,0 +1,103 @@
+<% # This is the home#index view, which is probably the first thing you saw when you started the app.
+  # The code here is messy! I wanted to make it easy for you to delete it all and start fresh,
+  # or pull out different parts that you want to use.
+  
+  @meta_tags = {
+    title: "RailsNotes UI Starter Kit Index",
+    description: "Home page | RailsNotes UI Ruby on Rails Starter Kit",
+  }
+  
+  @description = "Welcome! You're looking at the landing page, located in home#index. You're free to delete this entirely and start from scratch, or leave it in as something to build from. Below are some links to learn more about the features of this Starter Kit."
+  @sections = [
+    {
+      name: "Authentication",
+      description: "Devise is setup for User authentication, including social logins with Google and Github. Follow the docs to setup the correct credentials, then log in below.",
+      links: [
+        *(current_user.present? ? [{ href: "#", text: "Logged in ✓", method: :get }] : []),
+        *(current_user.blank? ? [{ href: new_user_session_path, text: "Log in →", method: :get }] : []),
+        { href: "https://railsnotesui.xyz/starter-kit/documentation#auth-authentication-with-devise", text: "Docs →", method: :get },
+      ],
+    },
+    {
+      name: "Payments",
+      description: "This template integrates with Stripe and Paddle for billing via the Pay gem. Use the links below to create an example subscription, and learn more by reading the docs.",
+      links: [
+        *(current_user&.payment_processor&.stripe? ? [{ href: @checkout_url, text: "Stripe Example Subscription →", method: :get }] : []),
+        *(current_user&.payment_processor&.stripe? ? [{ href: @billing_portal_url, text: "Stripe Billing Portal →", method: :get }] : []),
+        *(current_user&.payment_processor&.paddle_billing? ? [{ href: "#section_paddle-checkout", text: "Scroll ↓ for Paddle Checkout", method: :get }] : []),
+        *(current_user.nil? ? [{ href: "#section_log-in-sign-up", text: "Log in for Payments example ↓", method: :get }] : []),
+        { href: "https://railsnotesui.xyz/starter-kit/documentation#payments-setting-up-payments", text: "Docs →", method: :get },
+      ],
+    },
+    {
+      name: "Background Jobs",
+      description: "Sidekiq and Redis are setup for background jobs. Enqueue an ExampleJob below, then visit the dashboard to watch it run (login with admin/password).",
+      links: [
+        { href: enqeue_job_path, text: "Enqueue job →", method: :post },
+        { href: sidekiq_web_path, text: "Sidekiq Dashboard →", method: :get },
+        { href: "https://railsnotesui.xyz/starter-kit/documentation#jobs-background-jobs-with-sidekiq", text: "Docs →", method: :get },
+      ],
+    },
+    {
+      name: "Deployment",
+      description: "This template is pre-configured with some files for deployment to Heroku, Render and Hatchbox. Just run 'rails generate deploy' to get started.",
+      links: [
+        { href: "https://railsnotesui.xyz/starter-kit/documentation#deployment-deploying-your-app", text: "Docs →", method: :get },
+      ],
+    },
+    {
+      name: "Tests",
+      description: "There are some simple integrations tests for the basics of this template. Choose between Minitest and RSpec, then use them as a starting point for testing your app.",
+      links: [
+        { href: "https://railsnotesui.xyz/starter-kit/documentation#tests-testing-your-app", text: "Docs →", method: :get },
+      ],
+    },
+  ] %>
+<%= render "ui/controller_action" %>
+<div class="bg-white border-2 p-16 rounded-md">
+  <h1 class="tracking-tight max-w-2xl font-display font-bold text-6xl">Welcome to the <span class="underline decoration-red-500 decoration-double italic">RailsNotes UI</span> template!</h1>
+  <p class="mt-12"><%= @description %></p>
+  <div class="mt-12 space-y-4">
+    <% @sections.each do |doc| %>
+      <div class="h-full w-full flex flex-col group border-2 text-left p-4 rounded-md space-y-4 hover:border-stone-800">
+        <p class="text-xl font-display font-bold underline decoration-red-500"><%= doc[:name] %></p>
+        <p class="text-sm"><%= doc[:description] %></p>
+        <div class="divide-x-2 flex justify-end">
+          <% doc[:links].each do |link| %>
+            <%= button_to link[:text], link[:href], method: link[:method], data: { turbo: false }, class: "text-sm mx-4 hover:underline font-medium" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div id="section_paddle-checkout" class="mt-6">
+    <%= render "ui/paddle_checkout_button",
+               text: "Paddle Checkout →",
+               theme: :none,
+               items: [{
+                 priceId: "pri_01hm2n54bg0y1z990pkbt7szdg",
+                 quantity: 1,
+               }] if current_user&.payment_processor&.paddle_billing? %>
+  </div>
+  <div class="mt-12 pt-8 border-t-2 flex justify-between">
+    <div class="">
+      <% if current_user %>
+        <div class="flex items-center">
+          <%= image_tag(current_user.image_url, class: "h-12 w-12  rounded-md") unless current_user.image_url.nil? %>
+          <div class="ml-4 flex flex-col gap-y-1">
+            <p class="text-lg font-medium"><%= current_user.name %> [<%= current_user.billing_state %>]</p>
+            <p class="text-sm font-light font-mono"><%= current_user.email %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div id="section_log-in-sign-up" class="flex gap-x-4">
+      <% if current_user %>
+        <%= link_to "Edit account", edit_user_registration_path, class: "mt-4 px-4 py-2 border-2 rounded-md hover:border-gray-800" if current_user.provider.nil? %>
+        <%= button_to "Sign out", destroy_user_session_path, :method => :delete, class: "mt-4 px-4 py-2 border-2 rounded-md hover:border-gray-800" %>
+      <% else %>
+        <%= link_to "Log in", new_user_session_path, class: "px-4 py-2 border-2 rounded-md hover:border-gray-800" %>
+      <% end %>
+    </div>
+  </div>
+</div>

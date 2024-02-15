@@ -1,0 +1,13 @@
+Description:
+    Generates deployment files for the given platforms:
+        - heroku (https://heroku.com)
+        - render (https://render.com)
+
+Example:
+    bin/rails generate deploy [render|heroku]
+
+    heroku:
+        create  Procfile
+    render:
+        create  render.yml
+        create  render-build.sh

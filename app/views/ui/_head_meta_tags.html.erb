@@ -1,0 +1,72 @@
+<% # locals: (meta_tags: ) %>
+<!-- (above is a magic comment for strict locals: https://guides.rubyonrails.org/action_view_overview.html#strict-locals)
+
+[RailsNotes UI Addition]
+ui/head_meta_tags renders the HTML meta tags your app needs for SEO, social images, Paddle billing and more.
+
+This partial is already included in the application layout (app/views/layouts/application.html.erb).
+Define a @meta_tags hash in a view to override the defaults below (see app/views/home/index.html.erb for an example).
+
+@meta_tags = {
+  title:              The title of the current page
+  description:        The description of the current page
+  og_img_path:        Path to the OG image for the page, within app/assets/images (ie: main/og_img.png)
+}
+
+You should update the defaults values below to ones that make sense for your app.
+You can also add extra tags/values here.
+og_img_path uses the asset_url helper to grab the image via the asset pipeline.
+  - Make sure you replace the "og-image-replace-me.png" file with your own OpenGraph image.
+  - You should add any extra OG images to app/assets/images and adjust the filepaths as necessary.
+
+Example (in view/controller action):
+@meta_tags = {
+    title: "RailsNotes UI Starter Kit Index",
+    description: "Home page | RailsNotes UI Ruby on Rails Starter Kit",
+}
+-->
+<%
+  title = meta_tags&.dig(:title) || "RailsNotes UI Starter Kit"
+  description = meta_tags&.dig(:description) || "Don't forget to change me!"
+  og_image_path = meta_tags&.dig(:og_img_path) || "og-image-replace-me.png"
+
+  favicon_img_path = "favicon.ico"
+%>
+<head>
+  <title><%= title %></title>
+  <meta name="title" content="<%= title %>" />
+  <meta name="description" content="<%= description %>" />
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta property="og:title" content="<%= title %>" />
+  <meta property="og:site_name" content="<%= title %>" />
+  <meta property="og:description" content="<%= description %>" />
+  <meta property="og:url" content="<%= request.base_url + request.path %>" />
+  <meta property="og:image" content='<%= asset_url(og_image_path) %>' name="og:image">
+  <meta property="og:type" content="website" />
+  <meta property="twitter:title" content="<%= title %>" />
+  <meta property="twitter:description" content="<%= description %>" />
+  <meta property="twitter:url" content="<%= request.base_url + request.path %>" />
+  <meta property="twitter:image" content="<%= asset_url(og_image_path) %>" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+  <%= favicon_link_tag asset_path(favicon_img_path) %>
+  <!--
+    [RailsNotes UI Addition]
+    Include the Paddle.js script, and initialize it with the correct environment and token.
+
+    If you're not using Paddle for payments, you should remove (or comment out) this section
+    (It's safe to leave as-is, but you'd be downloading the paddle.js script unnecessarily).
+  --->
+  <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+  <script type="text/javascript">
+    const environment = "<%= Rails.env.production? ? "production" : "sandbox" %>"
+    Paddle.Environment.set(environment);
+    Paddle.Setup({
+      token: "<%= Pay::PaddleBilling.client_token %>"
+    });
+  </script>
+</head>
