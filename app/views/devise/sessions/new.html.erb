@@ -1,14 +1,14 @@
 <div class="mt-8 mx-auto max-w-xl">
   <%= render "ui/controller_action" %>
   <div class="bg-white border-2 p-16 text-center rounded-md">
-    <h1 class="font-display font-bold text-6xl">Log in</h1>
+    <h1 class="font-display font-bold text-6xl">Accedi</h1>
     <div class="max-w-md mx-auto">
       <div class="mt-12">
         <% -if resource_class.omniauth_providers.include?(:google_oauth2) %>
           <%= button_to omniauth_authorize_path(resource_name, :google_oauth2), data: { turbo: false }, class: "group inline-flex items-center justify-center mt-4 w-full text-center py-2 border-2 border-stone-800 rounded-md hover:bg-stone-800 hover:text-stone-50" do %>
             <%= image_tag "google_icon.png", class: "h-4 w-4 mr-4 group-hover:invert" %>
             <p>
-              Continue with Google
+              Continua con Google
             </p>
           <% end %>
         <% end %>
@@ -16,12 +16,12 @@
           <%= button_to omniauth_authorize_path(resource_name, :github), data: { turbo: false }, class: "group inline-flex items-center justify-center mt-4 w-full text-center py-2 border-2 border-stone-800 rounded-md hover:bg-stone-800 hover:text-stone-50" do %>
             <%= image_tag "github_icon.png", class: "h-5 w-5 mr-4 group-hover:invert" %>
             <p>
-              Continue with GitHub
+              Continua con GitHub
             </p>
           <% end %>
         <% end %>
       </div>
-      <p class="font-bold mt-12 mb-4">- OR -</p>
+      <p class="font-bold mt-12 mb-4">- oppure -</p>
       <%= render "devise/shared/error_messages", resource: @user %>
       <%= form_for(
             resource,
@@ -38,7 +38,7 @@
         <div>
           <div class="flex justify-between items-end">
             <%= f.label :password, class: "font-mono block text-sm/8 font-medium text-gray-900" %>
-            <%= link_to "Forgot your password?", new_password_path(resource_name), class: "text-xs/8 font-mono text-gray-500 hover:underline" %>
+            <%= link_to "Hai dimenticato la password?", new_password_path(resource_name), class: "text-xs/8 font-mono text-gray-500 hover:underline" %>
           </div>
           <div class="mt-2">
             <%= f.password_field :password, autocomplete: "current-password", placeholder: "*******", class: "block w-full py-1.5 text-stone-900 placeholder:text-stone-400 border-2 border-stone-200 rounded-md text-sm" %>
@@ -47,12 +47,12 @@
         <% if devise_mapping.rememberable? %>
           <div class="flex items-center">
             <%= f.check_box :remember_me, class: "border-stone-800 border-2 rounded-sm" %>
-            <%= f.label :remember_me, class: "ml-2 text-sm" %>
+            <%= f.label :remember_me, "ricordati di me", class: "ml-2 text-sm" %>
           </div>
         <% end %>
         <div class="flex mx-auto">
-          <%= link_to "Sign up", new_registration_path(resource_name), class: "mt-4 w-full rounded-l-md text-center py-2 border-2 border-stone-800 hover:bg-stone-800 hover:text-stone-50" %>
-          <%= f.submit "Log in →", class: "mt-4 w-full rounded-r-md py-2 text-stone-50 bg-stone-800 hover:cursor-pointer" %>
+          <%= link_to "Registrati", new_registration_path(resource_name), class: "mt-4 w-full rounded-l-md text-center py-2 border-2 border-stone-800 hover:bg-stone-800 hover:text-stone-50" %>
+          <%= f.submit "Accedi →", class: "mt-4 w-full rounded-r-md py-2 text-stone-50 bg-stone-800 hover:cursor-pointer" %>
         </div>
       <% end %>
     </div>
