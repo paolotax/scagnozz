@@ -82,3 +82,5 @@ gem "paddle", "~> 2.1"
 # A better version of partials (included for RailsNotes UI email templates/components)
 # (optional, you never have to use them if you don't want to!)
 gem "view_component", "~> 3.7"
+
+gem 'resend', '~> 0.10.0'

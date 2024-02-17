@@ -7,7 +7,7 @@ class HomeController < ApplicationController
     checkout_options = {
       mode: "subscription",
       line_items: [{
-        price: "price_1OWaR5BeEqD8q94iO5fqL3vY",
+        price: "price_1OkVTHLYvpKXFQXaUwBPpeF3",
         quantity: 1,
       }],
       subscription_data: {

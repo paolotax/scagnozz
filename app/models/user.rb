@@ -28,8 +28,8 @@ class User < ApplicationRecord
   # - https://github.com/pay-rails/pay/blob/main/docs/1_installation.md
   #
   # Set the default payment processor for a new User:
-  pay_customer default_payment_processor: :stripe # if using [Stripe]
-  # pay_customer default_payment_processor: :paddle_billing # if using [Paddle]
+  # pay_customer default_payment_processor: :stripe # if using [Stripe]
+  pay_customer default_payment_processor: :paddle_billing # if using [Paddle]
 
   # [RailsNotes UI Addition]
   # Tiny helper to grab a User's billing state.
