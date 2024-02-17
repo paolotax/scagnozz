@@ -6,7 +6,7 @@ Rails.application.configure do
   # [RailsNotes UI Addition]
   # Add your tunnel hostname here to allow it to connect to your app.
   # For example, if you're using ngrok, you might have this —
-  config.hosts << "bold-labrador-integral.ngrok-free.app"
+  config.hosts << "enabled-vulture-notably.ngrok-free.app"
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
