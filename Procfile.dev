@@ -10,5 +10,5 @@ sidekiq: bundle exec sidekiq
 # Optional: run Stripe CLI or ngrok for payments webhooks.
 # Uncomment them below (or delete if not using).
 #
-ngrok: ngrok http --domain=bold-labrador-integral.ngrok-free.app 3000
+ngrok: ngrok http --domain=enabled-vulture-notably.ngrok-free.app 3000
 #stripe: stripe listen --forward-to localhost:3000/pay/webhooks/stripe
