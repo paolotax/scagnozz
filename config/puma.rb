@@ -36,8 +36,8 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 # It's a sensible default, but it's worth looking into if you're
 # trying to squeeze every drop of performance from your app.
 #
-workers ENV.fetch("WEB_CONCURRENCY") { 1 } if Rails.env.local?
-workers ENV.fetch("WEB_CONCURRENCY") { 4 } if Rails.env.production?
+workers ENV.fetch("WEB_CONCURRENCY") { 1 } if ENV.fetch("RAILS_ENV", "development") == "development" # 1 thread in dev
+workers ENV.fetch("WEB_CONCURRENCY") { 4 } if ENV.fetch("RAILS_ENV", "development") == "production" # 4 threads in prod
 
 # Use the `preload_app!` method when specifying a `workers` number.
 # This directive tells Puma to first boot the application and load code
