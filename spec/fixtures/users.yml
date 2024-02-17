@@ -1,13 +1,25 @@
-# [RailsNotes UI Addition]
-# RSpec fixture for a test user; within our tests we log in as the user with —
+# == Schema Information
 #
-# RSpec.describe "BasicSiteTests", type: :system do
-#   fixtures :users
-#   it "should render root url after user login" do
-#     sign_in users(:regular_user)
-#     ...
-#   end
-# end
+# Table name: users
+#
+#  id                     :bigint           not null, primary key
+#  billing_state          :integer
+#  email                  :string           default(""), not null
+#  encrypted_password     :string           default(""), not null
+#  image_url              :string
+#  name                   :string
+#  provider               :string
+#  remember_created_at    :datetime
+#  reset_password_sent_at :datetime
+#  reset_password_token   :string
+#  uid                    :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#
+# Indexes
+#
+#  index_users_on_email                 (email) UNIQUE
+#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 regular_user:
   email: regular.user@example.com

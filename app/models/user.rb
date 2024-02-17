@@ -3,6 +3,7 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  billing_state          :integer
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  image_url              :string
